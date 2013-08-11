@@ -1,3 +1,5 @@
+__meteor_boostrap__.app.use(allowCrossDomain);
+
 CollectionAPI = function(options) {
   var self = this;
 
@@ -98,6 +100,10 @@ CollectionAPI._requestListener = function (server, request, response) {
   };
 
   self._requestCollection = self._server._collections[self._requestPath.collectionPath] ? self._server._collections[self._requestPath.collectionPath].collection : undefined;
+
+  if (self._request.method == 'OPTIONS') {
+    return self._optionsRequest();
+  }
 
   if (!self._authenticate()) {
     return self._unauthorizedResponse('Invalid/Missing Auth Token');
@@ -283,6 +289,11 @@ CollectionAPI._requestListener.prototype._postRequest = function() {
   });
 };
 
+CollectionAPI._requestListener.prototype._optionsRequest = function() {
+  var self = this;
+  self._sendResponse(200, body);
+};
+
 CollectionAPI._requestListener.prototype._okResponse = function(body) {
   var self = this;
   self._sendResponse(200, body);
@@ -328,6 +339,10 @@ CollectionAPI._requestListener.prototype._sendResponse = function(statusCode, bo
   self._response.statusCode = statusCode;
   self._response.setHeader('Content-Length', Buffer.byteLength(body, 'utf8'));
   self._response.setHeader('Content-Type', 'application/json');
+  self._response.setHeader('Access-Control-Allow-Origin', '*');  
+  self._response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
+  self._response.setHeader('Access-Control-Max-Age', 3628800);
+  self._response.setHeader('Access-Control-Allow-Methods': [PUT, DELETE, GET, POST, OPTIONS];   
   self._response.write(body);
   self._response.end();
 };
