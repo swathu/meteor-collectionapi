@@ -340,9 +340,11 @@ CollectionAPI._requestListener.prototype._sendResponse = function(statusCode, bo
   self._response.setHeader('Content-Length', Buffer.byteLength(body, 'utf8'));
   self._response.setHeader('Content-Type', 'application/json');
   self._response.setHeader('Access-Control-Allow-Origin', '*');  
-  self._response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
+  self._response.setHeader('Access-Control-Allow-Headers', '*');
   self._response.setHeader('Access-Control-Max-Age', 3628800);
-  self._response.setHeader('Access-Control-Allow-Methods': [PUT, DELETE, GET, POST, OPTIONS];   
+  self._response.setHeader('Access-Control-Allow-Methods': '*';
+  self._response.setHeader('Access-Control-Request-Methods': '*';
+  self._response.setHeader('Access-Control-Request-Headers': '*';  
   self._response.write(body);
   self._response.end();
 };
