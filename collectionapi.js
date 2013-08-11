@@ -1,5 +1,3 @@
-__meteor_boostrap__.app.use(allowCrossDomain);
-
 CollectionAPI = function(options) {
   var self = this;
 
