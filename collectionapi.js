@@ -342,8 +342,6 @@ CollectionAPI._requestListener.prototype._sendResponse = function(statusCode, bo
   self._response.setHeader('Access-Control-Allow-Origin', '*');  
   self._response.setHeader('Access-Control-Allow-Headers', '*');
   self._response.setHeader('Access-Control-Max-Age', 3628800);
-  self._response.setHeader('Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS';
-  self._response.setHeader('Access-Control-Request-Methods': 'POST, GET, PUT, DELETE, OPTIONS';
   self._response.setHeader('Access-Control-Request-Headers': '*';  
   self._response.write(body);
   self._response.end();
